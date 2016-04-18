@@ -9,7 +9,7 @@ Calque * initListCalque(){
 	List->listLUT = NULL;
 	for (int i = 0; i < 256; i++) {
 		for (int j = 0; j < 256; j++) {
-			List->Pixels[i][j]= createPixel(255,255,255,1);
+			List->pixels[i][j]= createPixel(255,255,255,1);
 		}
 	}
 	return List;
@@ -44,20 +44,20 @@ void addCalque(Calque *List){
 	 }
 }
 
-int removeCalque(Calque *List){
+void removeCalque(Calque *List){
 	if (NULL==List || isListCalqueNull(List)) {
 		return;
 	}
 	Calque *tmp = List;
 	if (NULL == tmp->next) {
-		free(tmp->List);
+		free(tmp->listLUT);
 		return;
 	}
-	while (NULL != next->next) {
+	while (NULL != tmp->next->next) {
 		tmp = tmp->next;
 	}
 	free(tmp->next);
-	???????
+	tmp->next = NULL;
 }
 
 void fusionCalques(){
@@ -74,6 +74,7 @@ void fusionCalques(){
         c_tmp = c_tmp->next;
     }
 }
+
 
 //Naviguer entre les calques
 // choix > 0 : on navigue vers la droite (next)

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "variables.h"
 #include "lut.h"
 #include "pixel.h"
 
@@ -10,12 +11,12 @@ typedef struct calque{
 	LUT *listLUT;
 	int fusion;
 	float alpha;
-	Pixel Pixels[][];
+	Pixel pixels[][];
 }Calque;
 
 Calque * initListCalque();
 int isListCalqueNull(Calque *List);
 void addCalque(Calque *List);
-int removeCalque(Calque *List);
+void removeCalque(Calque *List);
 void fusionCalques();
 Calque * naviguate(Calque * cActif, int choix);
