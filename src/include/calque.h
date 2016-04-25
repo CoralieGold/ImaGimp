@@ -11,8 +11,8 @@ typedef struct calque{
 	LUT *listLUT;
 	int fusion;
 	float alpha;
-	Pixel pixels[][];
-}Calque;
+	Pixel pixels[512][512]; // Les images font toutes 512 * 512 pixels
+} Calque;
 
 Calque * initListCalque();
 int isListCalqueNull(Calque *List);

@@ -21,7 +21,7 @@ int isListNull(LUT *List){
 }
 
 //Ajout d'un LUT
-void addLUT(LUT *List, int LUT[256]) {
+/*void addLUT(LUT *List, int LUT[256]) {
 	LUT * nouveau = malloc(sizeof(LUT));
 
 	//Si la n'existe pas
@@ -60,7 +60,7 @@ void addLUT(LUT *List, int LUT[256]) {
 	for (int i = 0; i < 256; i++) {
 		nouveau->LUT[i]=LUT[i];
 	}
-}
+}*/
 
 //Supression d'un noeud
 void removeNode(LUT *List){

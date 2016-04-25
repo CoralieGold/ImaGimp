@@ -60,15 +60,15 @@ void removeCalque(Calque *List){
 	tmp->next = NULL;
 }
 
-void fusionCalques(){
-    c_res = c_base;
-    c_tmp = c_base;
+void fusionCalques(Calque * c_base){
+    Calque * c_res = c_base;
+    Calque * c_tmp = c_base;
     while(c_tmp->next != NULL) {
          for(int i = 0; i < h; i ++) {
             for(int j = 0; j < w; j ++) {
-                c_res->pixels[i][j].r = c_res->pixels[i][j].r + c_tmp->alpha * c_tmp->pixels[i][j].r * c_tmp->pixels.alpha;
-                c_res->pixels[i][j].g = c_res->pixels[i][j].g + c_tmp->alpha * c_tmp->pixels[i][j].g * c_tmp->pixels.alpha;
-                c_res->pixels[i][j].b = c_res->pixels[i][j].b + c_tmp->alpha * c_tmp->pixels[i][j].b * c_tmp->pixels.alpha;
+                c_res->pixels[i][j].r = c_res->pixels[i][j].r + c_tmp->alpha * c_tmp->pixels[i][j].r * c_tmp->pixels[i][j].alpha;
+                c_res->pixels[i][j].g = c_res->pixels[i][j].g + c_tmp->alpha * c_tmp->pixels[i][j].g * c_tmp->pixels[i][j].alpha;
+                c_res->pixels[i][j].b = c_res->pixels[i][j].b + c_tmp->alpha * c_tmp->pixels[i][j].b * c_tmp->pixels[i][j].alpha;
             }
         }
         c_tmp = c_tmp->next;
