@@ -1,3 +1,6 @@
+#ifndef CALQUE_H_
+#define CALQUE_H_
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -20,3 +23,5 @@ void addCalque(Calque *List);
 void removeCalque(Calque *List);
 void fusionCalques();
 Calque * naviguate(Calque * cActif, int choix);
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef LUT_H_
+#define LUT_H_
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -20,3 +23,5 @@ LUT * addLum(int lum);
 LUT * dimLum(int lum);
 LUT * addCon(int c);
 LUT * dimCon(int c);
+
+#endif
