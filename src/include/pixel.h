@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 typedef struct pixel{
-	int r;
+    int r;
   int g;
   int b;
   int alpha;

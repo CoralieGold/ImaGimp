@@ -2,7 +2,7 @@
 
 //Initialiser une liste
 LUT * initListeLUT(){
-	LUT *List = malloc(sizeof(LUT));
+	LUT * List = malloc(sizeof(LUT));
 	List->previous = NULL;
 	List->next = NULL;
 	return List;
@@ -21,7 +21,9 @@ int isListNull(LUT *List){
 }
 
 //Ajout d'un LUT
-void addLUT(LUT *List, int LUT[256]){
+void addLUT(LUT *List, int LUT[256]) {
+	LUT * nouveau = malloc(sizeof(LUT));
+
 	//Si la n'existe pas
 	if (NULL == List) {
 		return;
@@ -38,26 +40,25 @@ void addLUT(LUT *List, int LUT[256]){
 	}
 
 	//Si la liste contient un seul noeud
-	if (List->next = List) {//elle pointe sur elle même)
-		LUT *new = malloc(sizeof(LUT));
-		new->previous = List;
-		new->next = List;
-		List->next = new;
-		List->previous = new;
+	if (List->next == List) {//elle pointe sur elle même)
+		nouveau->previous = List;
+		nouveau->next = List;
+		List->next = nouveau;
+		List->previous = nouveau;
 		for (int i = 0; i < 256; i++) {
-			new->LUT[i]=LUT[i];
+			nouveau->LUT[i]=LUT[i];
 		}
 		return;
 	}
 
 	//Sinon c'est qu'il y a déjà plein de noeud
-	LUT *new = malloc(sizeof(LUT));
-	new->next = List;
-	new->previous = List->previous;
-	List->previous->next = new;
-	List->previous = new;
+
+	nouveau->next = List;
+	nouveau->previous = List->previous;
+	List->previous->next = nouveau;
+	List->previous = nouveau;
 	for (int i = 0; i < 256; i++) {
-		new->LUT[i]=LUT[i];
+		nouveau->LUT[i]=LUT[i];
 	}
 }
 
@@ -77,7 +78,7 @@ void removeNode(LUT *List){
 		return;
 	}
 
-	LUT *tmp = List->previous;
+	LUT * tmp = List->previous;
 	tmp->previous = List;
 	List->previous = tmp->previous;
 	free(tmp);
@@ -87,48 +88,58 @@ void removeNode(LUT *List){
 /*****FONCTION LUT*****/
 
 //INVERT
-LUT invert(){
+LUT * invert(){
+    LUT * nouveau = malloc(sizeof(LUT));
 	int i;
 	for (i = 0; i < 256; i++) {
-		LUT[i]=255-i;
+		nouveau->LUT[i]=255-i;
 	}
+	return nouveau;
 }
 
 //ADDLUM
-LUT addLum(){
+LUT * addLum(int lum){
+    LUT * nouveau = malloc(sizeof(LUT));
 	int i;
 	for (i = 0; i < 256; i++) {
-		LUT[i]=i+n;
+		nouveau->LUT[i]=i+lum;
 	}
+	return nouveau;
 }
 
 //DIMLUM
-LUT dimLum(){
+LUT * dimLum(int lum){
+    LUT * nouveau = malloc(sizeof(LUT));
 	int i;
 	for (i = 0; i < 256; i++) {
-		LUT[i]=i-n;
+		nouveau->LUT[i]=i-lum;
 	}
+	return nouveau;
 }
 
 //ADDCON
 //255/2=127
 //C -> valeur de l'ajout contraste
-LUT addCon(){
+LUT * addCon(int c){
+    LUT * nouveau = malloc(sizeof(LUT));
 	int i;
 	for (i = 0; i < 256; i++) {
-		LUT[i]=(-(127-i)*c)+127;
+		nouveau->LUT[i]=(-(127-i)*c)+127;
 	}
+	return nouveau;
 }
 
 //DIMCON
 //Verifier que C =! 0
-LUT dimCon(){
+LUT * dimCon(int c){
 	int i;
+	LUT * nouveau = malloc(sizeof(LUT));
 	for (i = 0; i < 256; i++) {
-		if (c !=0) {
-			LUT[i]=(-(127-i)*(1/c))+127;
+		if (c != 0) {
+			nouveau->LUT[i]=(-(127-i)*(1/c))+127;
 		}
 	}
+	return nouveau;
 }
 
 //APPLIQUER UN LUT
