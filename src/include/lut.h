@@ -19,10 +19,9 @@ void addLUT(LUT *List, int LUT[256]);
 void removeNode(LUT *List);
 
 LUT * invert();
-LUT * addLum(int lum);
-LUT * dimLum(int lum);
-LUT * addCon(int c);
-LUT * dimCon(int c);
-LUT * sepia(int p);
+LUT * addLum(float lum);
+LUT * dimLum(float lum);
+LUT * addCon(float c);
+LUT * dimCon(float c);
 
 #endif

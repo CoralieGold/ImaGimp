@@ -11,7 +11,7 @@ Calque * initListCalque(){
 	List->hauteur = 0;
 	List->codePPM[0] = 'P';
 	List->codePPM[1] = '3';
-	for (int i = 0; i < 256; i++) {
+	for (int i = 0; i < 490000; i++) {
 		List->pixels[i] = createPixel(255,255,255,1);
 	}
 	return List;
@@ -101,7 +101,6 @@ Calque * naviguate(Calque * cActif, int choix){
 LUT3 = LUT2[LUT1]
 2- On applique le LUT à chaque pixel*/
 void appliquerLut(Calque * image) {
-	printf("test Lut\n");
 	Calque tmp;
 	tmp = *image;
 	while(tmp.listLUT->next != NULL) {
@@ -116,4 +115,28 @@ void appliquerLut(Calque * image) {
 	 		tmp.pixels[i].b = tmp.listLUT->LUT[tmp.pixels[i].b];
 	}
 	*image = tmp;
+}
+void gris(Calque * image) {
+	//addCalque(image);
+	int moyenne;
+	for(int i = 0; i < image->hauteur * image->largeur; i ++) {
+		moyenne = (image->pixels[i].r + image->pixels[i].g + image->pixels[i].b) / 3;
+		if(moyenne < 0) moyenne = 0;
+		else if(moyenne > 255) moyenne = 255;
+		image->pixels[i].r = moyenne;
+		image->pixels[i].g = moyenne;
+		image->pixels[i].b = moyenne;
+	}
+	image->codePPM[1] = '2';
+}
+
+void sepia(Calque * image) {
+	gris(image);
+	image->codePPM[1] = '3';
+	for(int i = 0; i < image->hauteur * image->largeur; i ++) {
+		image->pixels[i].r = image->pixels[i].r + 60;
+		image->pixels[i].g = image->pixels[i].g + 20;
+		if(image->pixels[i].r > 255) image->pixels[i].r = 255;
+		if(image->pixels[i].g > 255) image->pixels[i].g = 255;
+	}
 }

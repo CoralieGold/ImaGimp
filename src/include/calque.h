@@ -12,13 +12,13 @@
 typedef struct calque{
 	struct calque *next;
 	struct calque *previous;
-	LUT *listLUT;
+	LUT * listLUT;
 	int fusion;
 	float alpha;
 	int hauteur;
 	int largeur;
 	char codePPM[3];
-	Pixel pixels[256]; // Les images font toutes 512 * 512 au max pixels
+	Pixel pixels[490000]; // Images de 1000 pixels au max
 } Calque;
 
 Calque * initListCalque();
@@ -28,5 +28,8 @@ void removeCalque(Calque *List);
 void fusionCalques();
 Calque * naviguate(Calque * cActif, int choix);
 void appliquerLut(Calque * image);
+
+void sepia(Calque * image);
+void gris(Calque * image);
 
 #endif

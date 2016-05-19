@@ -97,9 +97,10 @@ LUT * invert(){
 }
 
 //ADDLUM
-LUT * addLum(int lum){
+LUT * addLum(float lum){
     LUT * nouveau = malloc(sizeof(LUT));
-	int i, lumiere;
+	int i;
+	float lumiere;
 	for (i = 0; i < 256; i++) {
 		lumiere = i + lum;
 		if(lumiere < 255) nouveau->LUT[i] = lumiere;
@@ -109,9 +110,10 @@ LUT * addLum(int lum){
 }
 
 //DIMLUM
-LUT * dimLum(int lum){
+LUT * dimLum(float lum){
     LUT * nouveau = malloc(sizeof(LUT));
-	int i, lumiere;
+	int i;
+	float lumiere;
 	for (i = 0; i < 256; i++) {
 		lumiere = i - lum;
 		if(lumiere > 0) nouveau->LUT[i] = lumiere;
@@ -123,9 +125,10 @@ LUT * dimLum(int lum){
 //ADDCON
 //255/2=127
 //C -> valeur de l'ajout contraste
-LUT * addCon(int c){
+LUT * addCon(float c){
     LUT * nouveau = malloc(sizeof(LUT));
-	int i, contraste;
+	int i;
+	float contraste;
 	for (i = 0; i < 256; i++) {
 		contraste = (-(127-i)*c)+127;
 		if(contraste >= 255) nouveau->LUT[i] = 255;
@@ -137,8 +140,9 @@ LUT * addCon(int c){
 
 //DIMCON
 //Verifier que C =! 0
-LUT * dimCon(int c){
-	int i, contraste;
+LUT * dimCon(float c){
+	int i;
+	float contraste;
 	LUT * nouveau = malloc(sizeof(LUT));
 	if (c > 0) {
 		for (i = 0; i < 256; i++) {
@@ -148,11 +152,6 @@ LUT * dimCon(int c){
 			else nouveau->LUT[i]=contraste;
 		}
 	}
-	return nouveau;
-}
-
-LUT * sepia(int p) {
-	LUT * nouveau = malloc(sizeof(LUT));
 	return nouveau;
 }
 
