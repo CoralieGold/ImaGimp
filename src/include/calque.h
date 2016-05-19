@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "variables.h"
 #include "lut.h"
@@ -14,7 +15,10 @@ typedef struct calque{
 	LUT *listLUT;
 	int fusion;
 	float alpha;
-	Pixel pixels[512][512]; // Les images font toutes 512 * 512 pixels
+	int hauteur;
+	int largeur;
+	char codePPM[3];
+	Pixel pixels[256][256]; // Les images font toutes 512 * 512 au max pixels
 } Calque;
 
 Calque * initListCalque();
@@ -23,5 +27,6 @@ void addCalque(Calque *List);
 void removeCalque(Calque *List);
 void fusionCalques();
 Calque * naviguate(Calque * cActif, int choix);
+void appliquerLut(Calque * image);
 
 #endif

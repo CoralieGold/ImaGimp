@@ -22,8 +22,6 @@ int isListNull(LUT *List){
 
 //Ajout d'un LUT
 /*void addLUT(LUT *List, int LUT[256]) {
-	LUT * nouveau = malloc(sizeof(LUT));
-
 	//Si la n'existe pas
 	if (NULL == List) {
 		return;
@@ -41,24 +39,25 @@ int isListNull(LUT *List){
 
 	//Si la liste contient un seul noeud
 	if (List->next == List) {//elle pointe sur elle même)
-		nouveau->previous = List;
-		nouveau->next = List;
-		List->next = nouveau;
-		List->previous = nouveau;
+		LUT *new = malloc(sizeof(LUT));
+		new->previous = List;
+		new->next = List;
+		List->next = new;
+		List->previous = new;
 		for (int i = 0; i < 256; i++) {
-			nouveau->LUT[i]=LUT[i];
+			new->LUT[i]=LUT[i];
 		}
 		return;
 	}
 
 	//Sinon c'est qu'il y a déjà plein de noeud
-
-	nouveau->next = List;
-	nouveau->previous = List->previous;
-	List->previous->next = nouveau;
-	List->previous = nouveau;
+	LUT *new = malloc(sizeof(LUT));
+	new->next = List;
+	new->previous = List->previous;
+	List->previous->next = new;
+	List->previous = new;
 	for (int i = 0; i < 256; i++) {
-		nouveau->LUT[i]=LUT[i];
+		new->LUT[i]=LUT[i];
 	}
 }*/
 
@@ -100,9 +99,11 @@ LUT * invert(){
 //ADDLUM
 LUT * addLum(int lum){
     LUT * nouveau = malloc(sizeof(LUT));
-	int i;
+	int i, lumiere;
 	for (i = 0; i < 256; i++) {
-		nouveau->LUT[i]=i+lum;
+		lumiere = i + lum;
+		if(lumiere < 255) nouveau->LUT[i] = lumiere;
+		else nouveau->LUT[i] = 255;
 	}
 	return nouveau;
 }
@@ -110,9 +111,11 @@ LUT * addLum(int lum){
 //DIMLUM
 LUT * dimLum(int lum){
     LUT * nouveau = malloc(sizeof(LUT));
-	int i;
+	int i, lumiere;
 	for (i = 0; i < 256; i++) {
-		nouveau->LUT[i]=i-lum;
+		lumiere = i - lum;
+		if(lumiere > 0) nouveau->LUT[i] = lumiere;
+		else nouveau->LUT[i] = 0;
 	}
 	return nouveau;
 }
@@ -122,9 +125,12 @@ LUT * dimLum(int lum){
 //C -> valeur de l'ajout contraste
 LUT * addCon(int c){
     LUT * nouveau = malloc(sizeof(LUT));
-	int i;
+	int i, contraste;
 	for (i = 0; i < 256; i++) {
-		nouveau->LUT[i]=(-(127-i)*c)+127;
+		contraste = (-(127-i)*c)+127;
+		if(contraste >= 255) nouveau->LUT[i] = 255;
+		else if(contraste <= 0) nouveau->LUT[i] = 0;
+		else nouveau->LUT[i]=contraste;
 	}
 	return nouveau;
 }
@@ -132,27 +138,22 @@ LUT * addCon(int c){
 //DIMCON
 //Verifier que C =! 0
 LUT * dimCon(int c){
-	int i;
+	int i, contraste;
 	LUT * nouveau = malloc(sizeof(LUT));
-	for (i = 0; i < 256; i++) {
-		if (c != 0) {
-			nouveau->LUT[i]=(-(127-i)*(1/c))+127;
+	if (c > 0) {
+		for (i = 0; i < 256; i++) {
+			contraste = (-(127-i)*(1/c))+127;
+			if(contraste >= 255) nouveau->LUT[i] = 255;
+			else if(contraste <= 0) nouveau->LUT[i] = 0;
+			else nouveau->LUT[i]=contraste;
 		}
 	}
 	return nouveau;
 }
 
-//APPLIQUER UN LUT
-/*1- on fusionne tous les LUT 1 et 2 ensemble dans LU3
-LUT3 = LUT2[LUT1]
-2- On applique le LUT à chaque pixel*/
+LUT * sepia(int p) {
+	LUT * nouveau = malloc(sizeof(LUT));
+	return nouveau;
+}
 
-//w = largeur
-//h = hauteur
-// for (i = 0; i < w; i++) {
-// 	for (j = 0; j < h; j++) {
-// 		calque.pixel[i][j].r = LUT[calque.pixel[i][j].r]
-// 		calque.pixel[i][j].v = LUT[calque.pixel[i][j].r]
-// 		calque.pixel[i][j].b = LUT[calque.pixel[i][j].r]
-// 	}
-// }
+

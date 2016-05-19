@@ -1,5 +1,8 @@
+#ifndef VARIABLES_H_
+#define VARIABLES_H_
+
 #include <stdio.h>
 #include <stdlib.h>
 
-static int w = 600;
-static int h = 800;
+
+#endif

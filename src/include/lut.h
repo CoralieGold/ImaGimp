@@ -23,5 +23,6 @@ LUT * addLum(int lum);
 LUT * dimLum(int lum);
 LUT * addCon(int c);
 LUT * dimCon(int c);
+LUT * sepia(int p);
 
 #endif
