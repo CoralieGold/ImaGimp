@@ -12,9 +12,7 @@ Calque * initListCalque(){
 	List->codePPM[0] = 'P';
 	List->codePPM[1] = '3';
 	for (int i = 0; i < 256; i++) {
-		for (int j = 0; j < 256; j++) {
-			List->pixels[i][j]= createPixel(255,255,255,1);
-		}
+		List->pixels[i] = createPixel(255,255,255,1);
 	}
 	return List;
 }
@@ -44,10 +42,8 @@ void addCalque(Calque *List){
 	new->largeur = List->largeur;
 	//strcat(new->codeLUT, List->codeLUT);
 	new->listLUT = initListeLUT();
-	for(int i = 0; i < new->hauteur; i ++) {
-		for(int j = 0; j < new->largeur; j ++) {
-			new->pixels[i][j] = createPixel(255, 255, 255, 1);
-		}
+	for(int i = 0; i < new->hauteur * new->largeur; i ++) {
+		new->pixels[i] = createPixel(255, 255, 255, 1);
 	}
 	List->next = new;
 }
@@ -72,12 +68,10 @@ void fusionCalques(Calque * c_base){
     Calque * c_res = c_base;
     Calque * c_tmp = c_base;
     while(c_tmp->next != NULL) {
-         for(int i = 0; i < c_base->hauteur; i ++) {
-            for(int j = 0; j < c_base->largeur; j ++) {
-                c_res->pixels[i][j].r = c_res->pixels[i][j].r + c_tmp->alpha * c_tmp->pixels[i][j].r * c_tmp->pixels[i][j].alpha;
-                c_res->pixels[i][j].g = c_res->pixels[i][j].g + c_tmp->alpha * c_tmp->pixels[i][j].g * c_tmp->pixels[i][j].alpha;
-                c_res->pixels[i][j].b = c_res->pixels[i][j].b + c_tmp->alpha * c_tmp->pixels[i][j].b * c_tmp->pixels[i][j].alpha;
-            }
+         for(int i = 0; i < c_base->largeur * c_base->hauteur; i ++) {
+                c_res->pixels[i].r = c_res->pixels[i].r + c_tmp->alpha * c_tmp->pixels[i].r * c_tmp->pixels[i].alpha;
+                c_res->pixels[i].g = c_res->pixels[i].g + c_tmp->alpha * c_tmp->pixels[i].g * c_tmp->pixels[i].alpha;
+                c_res->pixels[i].b = c_res->pixels[i].b + c_tmp->alpha * c_tmp->pixels[i].b * c_tmp->pixels[i].alpha;
         }
         c_tmp = c_tmp->next;
     }
@@ -116,12 +110,10 @@ void appliquerLut(Calque * image) {
 		}
 		//image->listLUT = image->listLUT->next;
 	}
-	for (int i = 0; i < image->hauteur; i++) {
-		for (int j = 0; j < image->largeur; j++) {
-	 		tmp.pixels[i][j].r = tmp.listLUT->LUT[tmp.pixels[i][j].r];
-	 		tmp.pixels[i][j].g = tmp.listLUT->LUT[tmp.pixels[i][j].g];
-	 		tmp.pixels[i][j].b = tmp.listLUT->LUT[tmp.pixels[i][j].b];
-	 	}
+	for (int i = 0; i < image->largeur * image->hauteur; i++) {
+	 		tmp.pixels[i].r = tmp.listLUT->LUT[tmp.pixels[i].r];
+	 		tmp.pixels[i].g = tmp.listLUT->LUT[tmp.pixels[i].g];
+	 		tmp.pixels[i].b = tmp.listLUT->LUT[tmp.pixels[i].b];
 	}
 	*image = tmp;
 }

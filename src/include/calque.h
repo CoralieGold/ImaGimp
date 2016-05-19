@@ -18,7 +18,7 @@ typedef struct calque{
 	int hauteur;
 	int largeur;
 	char codePPM[3];
-	Pixel pixels[256][256]; // Les images font toutes 512 * 512 au max pixels
+	Pixel pixels[256]; // Les images font toutes 512 * 512 au max pixels
 } Calque;
 
 Calque * initListCalque();

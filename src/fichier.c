@@ -5,7 +5,6 @@ Calque * lireImage(char nomImage[]) {
 
 	FILE *image = NULL;
 	image = fopen(nomImage, "r");
-	char chaine[262144]; // 512 * 512 pixels dans l'image
 
 	if (image == NULL) exit(EXIT_FAILURE);
 
@@ -54,97 +53,56 @@ Calque * lireImage(char nomImage[]) {
 	imageDeBase->hauteur = hauteur;
 	imageDeBase->largeur = largeur;
 
-	fseek(image, 1, SEEK_CUR);
+fseek(image, 1, SEEK_CUR);
 
-	int k, l;
-	char rouge[3];
-	char vert[3];
-	char bleu[3];
+	char rouge[4];
+	char vert[4];
+	char bleu[4];
 	// cas image couleur P3
 	if(!strcmp(codePPM, "P3")) {
-		fgets(chaine, (3*hauteur * 3*largeur) * 6 , image);
-		printf("Image (couleurs) : %s", chaine);
-		k = 0;
-		l = 0;
-		for(i = 0; i < largeur; i ++) {
-			for(j = 0; j < hauteur; j ++) {
+		for(i = 0; i < largeur * hauteur; i ++) {
 
-				while(chaine[k] != ' ') {
-					rouge[l] = chaine[k];
-					k ++;
-					l ++;
-				}
-				imageDeBase->pixels[i][j].r = atol(rouge);
+				//fseek(image, 0, SEEK_CUR);
+				fgets(rouge, 5, image);
+				imageDeBase->pixels[i].r = atol(rouge);
+				//fseek(image, 0, SEEK_CUR);
+				fgets(vert, 5, image);
+				imageDeBase->pixels[i].g = atol(vert);
+				//fseek(image, 0, SEEK_CUR);
+				fgets(bleu, 5, image);
+				imageDeBase->pixels[i].b = atol(bleu);
 
-				k ++;
-				l = 0;
-
-				while(chaine[k] != ' ') {
-					vert[l] = chaine[k];
-					k ++;
-					l ++;
-				}
-				imageDeBase->pixels[i][j].g = atol(vert);
-
-				k ++;
-				l = 0;
-
-				while(chaine[k] != ' ') {
-					bleu[l] = chaine[k];
-					k ++;
-					l ++;
-				}
-				imageDeBase->pixels[i][j].b = atol(bleu);
-
-				k ++;
-				l = 0;
-
-				printf("Rouge : %d \n", imageDeBase->pixels[i][j].r);
-				printf("Vert : %d \n", imageDeBase->pixels[i][j].g);
-				printf("Bleu : %d \n", imageDeBase->pixels[i][j].b);
+				printf("Rouge : %d \n", imageDeBase->pixels[i].r);
+				printf("Vert : %d \n", imageDeBase->pixels[i].g);
+				printf("Bleu : %d \n", imageDeBase->pixels[i].b);
 				printf("\n");
 
-				for(int p = 0; p < 3; p ++) {
+				for(int p = 0; p < 4; p ++) {
 				rouge[p] = ' ';
 				vert[p] = ' ';
 				bleu[p] = ' ';
 				}
-			}
+			
 		}
 	}
 	// cas image n&b
 	else if(!strcmp(codePPM, "P2")) {
-		k = 0;
-		l = 0;
 		imageDeBase->codePPM[1] = '2';
-		fgets(chaine, (3*hauteur * 3*largeur) * 2 , image);
-		printf("Image (n&b) : %s", chaine);
-		for(i = 0; i < largeur; i ++) {
-			for(j = 0; j < hauteur; j ++) {
-				while(chaine[k] != ' ') {
-					rouge[l] = chaine[k];
-					k ++;
-					l ++;
-					printf("k : %d, l : %d \n", k, l);
-				}
-				imageDeBase->pixels[i][j].r = atol(rouge);
-				imageDeBase->pixels[i][j].g = atol(rouge);
-				imageDeBase->pixels[i][j].b = atol(rouge);
+		for(i = 0; i < largeur * hauteur; i ++) {
+				fgets(rouge, 5, image);
+				imageDeBase->pixels[i].r = atol(rouge);
+			imageDeBase->pixels[i].g = atol(vert);
+			imageDeBase->pixels[i].b = atol(bleu);
+				printf("Rouge : %d \n", imageDeBase->pixels[i].r);
+				printf("Vert : %d \n", imageDeBase->pixels[i].g);
+				printf("Bleu : %d \n", imageDeBase->pixels[i].b);
 				printf("\n");
-				printf("Rouge : %d \n", imageDeBase->pixels[i][j].r);
-				printf("Vert : %d \n", imageDeBase->pixels[i][j].g);
-				printf("Bleu : %d \n", imageDeBase->pixels[i][j].b);
-				printf("\n");
-				k ++;
-				l = 0;
 
-				for(int p = 0; p < 3; p ++) {
-					rouge[p] = ' ';
+				for(int p = 0; p < 4; p ++) {
+				rouge[p] = ' ';
 				}
-
-			}
+			
 		}
-
 	}
 
 	fclose(image);
@@ -167,11 +125,11 @@ void ecritureImage(Calque * imageFinale, char nomImage[]) {
 	image = fopen(nomImageFinale, "w");
 	if(image != NULL) {
 		fprintf(image, "%s \n%d    %d   \n255 \n", imageFinale->codePPM, imageFinale->largeur, imageFinale->hauteur);
-		for(int i = 0; i < imageFinale->hauteur; i ++) {
-			for(int j = 0; j < imageFinale->largeur; j ++) {
-				if(strcmp(imageFinale->codePPM, "P3") == 0) fprintf(image, "%d %d %d ", imageFinale->pixels[i][j].r, imageFinale->pixels[i][j].g, imageFinale->pixels[i][j].b);
-				else if(strcmp(imageFinale->codePPM, "P2") == 0) fprintf(image, "%d ", imageFinale->pixels[i][j].r);
-			}
+		for(int i = 0; i < imageFinale->hauteur * imageFinale->largeur; i ++) {
+
+				if(strcmp(imageFinale->codePPM, "P3") == 0) fprintf(image, "%d %d %d ", imageFinale->pixels[i].r, imageFinale->pixels[i].g, imageFinale->pixels[i].b);
+				else if(strcmp(imageFinale->codePPM, "P2") == 0) fprintf(image, "%d ", imageFinale->pixels[i].r);
+			
 		}
 	}
 	fclose(image);

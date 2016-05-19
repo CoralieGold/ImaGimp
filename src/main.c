@@ -14,7 +14,6 @@ int main(int argc, char** argv) {
 	}
 
 	Calque * image = lireImage(argv[1]);
-    	printf("image : %d", image->hauteur);
 
 	char codeLut[6];
 	int parametre;
@@ -41,11 +40,8 @@ int main(int argc, char** argv) {
 
 	fusionCalques(image);
 
-	for(int i = 0; i < image->hauteur; i ++) {
-		printf("test");
-		for(int j = 0; j < image->largeur; j ++) {
-			printf("Pixel %d %d : %d %d %d\n", i, j, image->pixels[i][j].r, image->pixels[i][j].g, image->pixels[i][j].b);
-		}
+	for(int i = 0; i < image->largeur * image->hauteur; i ++) {
+			printf("Pixel %d : %d %d %d\n", i, image->pixels[i].r, image->pixels[i].g, image->pixels[i].b);
 	}
 
 	ecritureImage(image, argv[1]);
