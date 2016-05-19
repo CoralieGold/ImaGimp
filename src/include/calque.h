@@ -31,5 +31,11 @@ void appliquerLut(Calque * image);
 
 void sepia(Calque * image);
 void gris(Calque * image);
+void rouge(Calque * image);
+void vert(Calque * image);
+void bleu(Calque * image);
+void cyan(Calque * image);
+void magenta(Calque * image);
+void jaune(Calque * image);
 
 #endif

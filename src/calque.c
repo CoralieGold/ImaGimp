@@ -140,3 +140,62 @@ void sepia(Calque * image) {
 		if(image->pixels[i].g > 255) image->pixels[i].g = 255;
 	}
 }
+
+void rouge(Calque * image) {
+	gris(image);
+	image->codePPM[1] = '3';
+	for(int i = 0; i < image->hauteur * image->largeur; i ++) {
+		image->pixels[i].r = image->pixels[i].r + 100;
+		if(image->pixels[i].r > 255) image->pixels[i].r = 255;
+	}
+}
+
+void vert(Calque * image) {
+	gris(image);
+	image->codePPM[1] = '3';
+	for(int i = 0; i < image->hauteur * image->largeur; i ++) {
+		image->pixels[i].g = image->pixels[i].g + 100;
+		if(image->pixels[i].g > 255) image->pixels[i].g = 255;
+	}
+}
+
+void bleu(Calque * image) {
+	gris(image);
+	image->codePPM[1] = '3';
+	for(int i = 0; i < image->hauteur * image->largeur; i ++) {
+		image->pixels[i].b = image->pixels[i].b + 100;
+		if(image->pixels[i].b > 255) image->pixels[i].b = 255;
+	}
+}
+
+void cyan(Calque * image) {
+	gris(image);
+	image->codePPM[1] = '3';
+	for(int i = 0; i < image->hauteur * image->largeur; i ++) {
+		image->pixels[i].b = image->pixels[i].b + 100;
+		image->pixels[i].g = image->pixels[i].g + 100;
+		if(image->pixels[i].b > 255) image->pixels[i].b = 255;
+		if(image->pixels[i].g > 255) image->pixels[i].g = 255;
+	}
+}
+void magenta(Calque * image) {
+	gris(image);
+	image->codePPM[1] = '3';
+	for(int i = 0; i < image->hauteur * image->largeur; i ++) {
+		image->pixels[i].r = image->pixels[i].r + 100;
+		image->pixels[i].b = image->pixels[i].b + 100;
+		if(image->pixels[i].r > 255) image->pixels[i].r = 255;
+		if(image->pixels[i].b > 255) image->pixels[i].b = 255;
+	}
+}
+void jaune(Calque * image) {
+	gris(image);
+	image->codePPM[1] = '3';
+	for(int i = 0; i < image->hauteur * image->largeur; i ++) {
+		image->pixels[i].r = image->pixels[i].r + 100;
+		image->pixels[i].g = image->pixels[i].g + 100;
+		if(image->pixels[i].r > 255) image->pixels[i].r = 255;
+		if(image->pixels[i].g > 255) image->pixels[i].g = 255;
+	}
+}
+

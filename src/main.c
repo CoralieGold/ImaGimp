@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 	
-	char codeLut[6];
+	char codeLut[9];
 	float parametre;
 
 	int i = 2;
@@ -31,10 +31,15 @@ int main(int argc, char** argv) {
 
 		addCalque(image);
 
-		if(!strcmp(codeLut, "SEPIA") || !strcmp(codeLut, "GRIS")) {
-
+		if(!strcmp(codeLut, "SEPIA") || !strcmp(codeLut, "GRIS") || !strcmp(codeLut, "ROUGE") || !strcmp(codeLut, "VERT") || !strcmp(codeLut, "BLEU") || !strcmp(codeLut, "JAUNE") || !strcmp(codeLut, "MAGENTA") || !strcmp(codeLut, "CYAN")) {
 			if (!strcmp(codeLut, "SEPIA")) sepia(image);
 			else if (!strcmp(codeLut, "GRIS")) gris(image);
+			else if (!strcmp(codeLut, "ROUGE")) rouge(image);
+			else if (!strcmp(codeLut, "VERT")) vert(image);
+			else if (!strcmp(codeLut, "BLEU")) bleu(image);
+			else if (!strcmp(codeLut, "CYAN")) cyan(image);
+			else if (!strcmp(codeLut, "MAGENTA")) magenta(image);
+			else if (!strcmp(codeLut, "JAUNE")) jaune(image);
 		}
 		else {
 			if(!strcmp(codeLut, "ADDLUM"))

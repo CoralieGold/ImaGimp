@@ -132,7 +132,7 @@ void ecritureImage(Calque * imageFinale, char nomImage[]) {
 		for(int i = 0; i < imageFinale->hauteur * imageFinale->largeur; i ++) {
 
 				if(strcmp(imageFinale->codePPM, "P3") == 0) fprintf(image, "%d\n%d\n%d\n", imageFinale->pixels[i].r, imageFinale->pixels[i].g, imageFinale->pixels[i].b);
-				else if(strcmp(imageFinale->codePPM, "P2") == 0) fprintf(image, "%d ", imageFinale->pixels[i].r);
+				else if(strcmp(imageFinale->codePPM, "P2") == 0) fprintf(image, "%d\n", imageFinale->pixels[i].r);
 			
 		}
 	}
