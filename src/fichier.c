@@ -113,26 +113,23 @@ Calque * lireImage(char nomImage[]) {
 }
 
 void ecritureImage(Calque * imageFinale, char nomImage[]) {
-	int i = 0;
 	char nomImageFinale[100];
 	char dossier[100];
-	while(nomImage[i] != '.') {
-		nomImageFinale[i] = nomImage[i];
-		i++;
-	}
-	nomImageFinale[i]= '_';
-	strcat(nomImageFinale, "New.ppm");
+	memset(nomImageFinale, 0, sizeof(nomImageFinale));
+	memset(dossier, 0, sizeof(dossier));
+	strcat(nomImageFinale, nomImage);
+	strcat(nomImageFinale, ".ppm");
 	strcat(dossier, "images/");
 	strcat(dossier, nomImageFinale);
-
+	printf("nom dossier %s \n", dossier);
 	FILE * image = NULL;
-	image = fopen(nomImageFinale, "w");
+	image = fopen(dossier, "w");
 	if(image != NULL) {
 		fprintf(image, "%s \n%d    %d   \n255 \n", imageFinale->codePPM, imageFinale->largeur, imageFinale->hauteur);
 		for(int i = 0; i < imageFinale->hauteur * imageFinale->largeur; i ++) {
 
 				if(strcmp(imageFinale->codePPM, "P3") == 0) fprintf(image, "%d\n%d\n%d\n", imageFinale->pixels[i].r, imageFinale->pixels[i].g, imageFinale->pixels[i].b);
-				else if(strcmp(imageFinale->codePPM, "P2") == 0) fprintf(image, "%d\n", imageFinale->pixels[i].r);
+				else if(strcmp(imageFinale->codePPM, "P2") == 0) fprintf(image, "%d ", imageFinale->pixels[i].r);
 			
 		}
 	}

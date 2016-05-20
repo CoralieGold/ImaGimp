@@ -8,7 +8,7 @@
 #include "include/fichier.h"
 
 int main(int argc, char** argv) {
-	if(argc < 4 && argc%2 != 0) {
+	if(argc < 5 && argc%2 == 0) {
 		printf("Vous devez donner un paramètre pour chaque code LUT.\n");
 		return 1;
 	}
@@ -20,10 +20,12 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 	
+	char nomNouvelleImage[30];
+	strcpy(nomNouvelleImage, argv[2]); 
 	char codeLut[9];
 	float parametre;
 
-	int i = 2;
+	int i = 3;
 	while(argc > i) {
 		
 		strcpy(codeLut,argv[i]);
@@ -31,9 +33,9 @@ int main(int argc, char** argv) {
 
 		addCalque(image);
 
-		if(!strcmp(codeLut, "SEPIA") || !strcmp(codeLut, "GRIS") || !strcmp(codeLut, "ROUGE") || !strcmp(codeLut, "VERT") || !strcmp(codeLut, "BLEU") || !strcmp(codeLut, "JAUNE") || !strcmp(codeLut, "MAGENTA") || !strcmp(codeLut, "CYAN")) {
+		if(!strcmp(codeLut, "SEPIA") || !strcmp(codeLut, "NB") || !strcmp(codeLut, "ROUGE") || !strcmp(codeLut, "VERT") || !strcmp(codeLut, "BLEU") || !strcmp(codeLut, "JAUNE") || !strcmp(codeLut, "MAGENTA") || !strcmp(codeLut, "CYAN")) {
 			if (!strcmp(codeLut, "SEPIA")) sepia(image);
-			else if (!strcmp(codeLut, "GRIS")) gris(image);
+			else if (!strcmp(codeLut, "NB")) nb(image);
 			else if (!strcmp(codeLut, "ROUGE")) rouge(image);
 			else if (!strcmp(codeLut, "VERT")) vert(image);
 			else if (!strcmp(codeLut, "BLEU")) bleu(image);
@@ -50,20 +52,20 @@ int main(int argc, char** argv) {
 			else if (!strcmp(codeLut, "INVERT")) image->listLUT = invert();
 		
 		
-			//fusionCalques(image);
+			
 			appliquerLut(image);
 		}
 
 		i = i + 2;
 	}
 
-	//fusionCalques(image);
+	fusionCalques(image);
 
 	/*for(int i = 0; i < image->largeur * image->hauteur; i ++) {
 			printf("Pixel %d : %d %d %d\n", i, image->pixels[i].r, image->pixels[i].g, image->pixels[i].b);
 	}*/
 
-	ecritureImage(image, argv[1]);
+	ecritureImage(image, nomNouvelleImage);
 
 	return 0;
 }

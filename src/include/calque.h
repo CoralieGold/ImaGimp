@@ -30,7 +30,7 @@ Calque * naviguate(Calque * cActif, int choix);
 void appliquerLut(Calque * image);
 
 void sepia(Calque * image);
-void gris(Calque * image);
+void nb(Calque * image);
 void rouge(Calque * image);
 void vert(Calque * image);
 void bleu(Calque * image);

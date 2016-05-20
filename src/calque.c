@@ -116,8 +116,7 @@ void appliquerLut(Calque * image) {
 	}
 	*image = tmp;
 }
-void gris(Calque * image) {
-	//addCalque(image);
+void nb(Calque * image) {
 	int moyenne;
 	for(int i = 0; i < image->hauteur * image->largeur; i ++) {
 		moyenne = (image->pixels[i].r + image->pixels[i].g + image->pixels[i].b) / 3;
@@ -131,7 +130,7 @@ void gris(Calque * image) {
 }
 
 void sepia(Calque * image) {
-	gris(image);
+	nb(image);
 	image->codePPM[1] = '3';
 	for(int i = 0; i < image->hauteur * image->largeur; i ++) {
 		image->pixels[i].r = image->pixels[i].r + 60;
@@ -142,7 +141,7 @@ void sepia(Calque * image) {
 }
 
 void rouge(Calque * image) {
-	gris(image);
+	//gris(image);	
 	image->codePPM[1] = '3';
 	for(int i = 0; i < image->hauteur * image->largeur; i ++) {
 		image->pixels[i].r = image->pixels[i].r + 100;
@@ -151,7 +150,7 @@ void rouge(Calque * image) {
 }
 
 void vert(Calque * image) {
-	gris(image);
+	//gris(image);
 	image->codePPM[1] = '3';
 	for(int i = 0; i < image->hauteur * image->largeur; i ++) {
 		image->pixels[i].g = image->pixels[i].g + 100;
@@ -160,7 +159,7 @@ void vert(Calque * image) {
 }
 
 void bleu(Calque * image) {
-	gris(image);
+	//gris(image);
 	image->codePPM[1] = '3';
 	for(int i = 0; i < image->hauteur * image->largeur; i ++) {
 		image->pixels[i].b = image->pixels[i].b + 100;
@@ -169,7 +168,7 @@ void bleu(Calque * image) {
 }
 
 void cyan(Calque * image) {
-	gris(image);
+	//gris(image);
 	image->codePPM[1] = '3';
 	for(int i = 0; i < image->hauteur * image->largeur; i ++) {
 		image->pixels[i].b = image->pixels[i].b + 100;
@@ -179,7 +178,7 @@ void cyan(Calque * image) {
 	}
 }
 void magenta(Calque * image) {
-	gris(image);
+	//gris(image);
 	image->codePPM[1] = '3';
 	for(int i = 0; i < image->hauteur * image->largeur; i ++) {
 		image->pixels[i].r = image->pixels[i].r + 100;
@@ -189,7 +188,7 @@ void magenta(Calque * image) {
 	}
 }
 void jaune(Calque * image) {
-	gris(image);
+	//gris(image);
 	image->codePPM[1] = '3';
 	for(int i = 0; i < image->hauteur * image->largeur; i ++) {
 		image->pixels[i].r = image->pixels[i].r + 100;
