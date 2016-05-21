@@ -39,19 +39,19 @@ int isListNull(LUT *List){
 
 	//Si la liste contient un seul noeud
 	if (List->next == List) {//elle pointe sur elle même)
-		LUT *new = malloc(sizeof(LUT));
-		new->previous = List;
-		new->next = List;
-		List->next = new;
-		List->previous = new;
+		LUT * nouveau = malloc(sizeof(LUT));
+		nouveau->previous = List;
+		nouveau->next = List;
+		List->next = nouveau;
+		List->previous = nouveau;
 		for (int i = 0; i < 256; i++) {
-			new->LUT[i]=LUT[i];
+			nouveau->LUT[i]=LUT[i];
 		}
 		return;
 	}
 
 	//Sinon c'est qu'il y a déjà plein de noeud
-	LUT *new = malloc(sizeof(LUT));
+	LUT * new = malloc(sizeof(LUT));
 	new->next = List;
 	new->previous = List->previous;
 	List->previous->next = new;
@@ -94,6 +94,7 @@ LUT * invert(){
 		nouveau->LUT[i]=255-i;
 	}
 	return nouveau;
+	printf("Inversion des couleurs : fait. \n");
 }
 
 //ADDLUM
@@ -106,6 +107,7 @@ LUT * addLum(float lum){
 		if(lumiere < 255) nouveau->LUT[i] = lumiere;
 		else nouveau->LUT[i] = 255;
 	}
+	printf("Ajout de lumière : fait. \n");
 	return nouveau;
 }
 
@@ -119,6 +121,7 @@ LUT * dimLum(float lum){
 		if(lumiere > 0) nouveau->LUT[i] = lumiere;
 		else nouveau->LUT[i] = 0;
 	}
+	printf("Diminution de lumière : fait. \n");
 	return nouveau;
 }
 
@@ -126,7 +129,7 @@ LUT * dimLum(float lum){
 //255/2=127
 //C -> valeur de l'ajout contraste
 LUT * addCon(float c){
-    LUT * nouveau = malloc(sizeof(LUT));
+	LUT * nouveau = malloc(sizeof(LUT));
 	int i;
 	float contraste;
 	for (i = 0; i < 256; i++) {
@@ -135,6 +138,7 @@ LUT * addCon(float c){
 		else if(contraste <= 0) nouveau->LUT[i] = 0;
 		else nouveau->LUT[i]=contraste;
 	}
+	printf("Ajout de contraste : fait. \n");
 	return nouveau;
 }
 
@@ -152,6 +156,7 @@ LUT * dimCon(float c){
 			else nouveau->LUT[i]=contraste;
 		}
 	}
+	printf("Diminution de contraste : fait. \n");
 	return nouveau;
 }
 

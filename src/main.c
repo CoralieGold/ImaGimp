@@ -25,6 +25,11 @@ int main(int argc, char** argv) {
 	char codeLut[9];
 	float parametre;
 
+	/*image->listLUT = addLum(0);
+	appliquerLut(image);
+	dessinerHistogramme(image);*/	
+	
+	printf("Début du traitement.\n");
 	int i = 3;
 	while(argc > i) {
 		
@@ -60,6 +65,7 @@ int main(int argc, char** argv) {
 	}
 
 	fusionCalques(image);
+	printf("Fin du traitement. \n");
 
 	/*for(int i = 0; i < image->largeur * image->hauteur; i ++) {
 			printf("Pixel %d : %d %d %d\n", i, image->pixels[i].r, image->pixels[i].g, image->pixels[i].b);

@@ -127,6 +127,7 @@ void nb(Calque * image) {
 		image->pixels[i].b = moyenne;
 	}
 	image->codePPM[1] = '2';
+	printf("Image en noir et blanc : fait. \n");
 }
 
 void sepia(Calque * image) {
@@ -138,6 +139,7 @@ void sepia(Calque * image) {
 		if(image->pixels[i].r > 255) image->pixels[i].r = 255;
 		if(image->pixels[i].g > 255) image->pixels[i].g = 255;
 	}
+	printf("Image en sépia : fait. \n");
 }
 
 void rouge(Calque * image) {
@@ -147,6 +149,7 @@ void rouge(Calque * image) {
 		image->pixels[i].r = image->pixels[i].r + 100;
 		if(image->pixels[i].r > 255) image->pixels[i].r = 255;
 	}
+	printf("Plus de rouge : fait. \n");
 }
 
 void vert(Calque * image) {
@@ -156,6 +159,7 @@ void vert(Calque * image) {
 		image->pixels[i].g = image->pixels[i].g + 100;
 		if(image->pixels[i].g > 255) image->pixels[i].g = 255;
 	}
+	printf("Plus de vert : fait. \n");
 }
 
 void bleu(Calque * image) {
@@ -165,6 +169,7 @@ void bleu(Calque * image) {
 		image->pixels[i].b = image->pixels[i].b + 100;
 		if(image->pixels[i].b > 255) image->pixels[i].b = 255;
 	}
+	printf("Plus de vert : fait. \n");
 }
 
 void cyan(Calque * image) {
@@ -176,6 +181,7 @@ void cyan(Calque * image) {
 		if(image->pixels[i].b > 255) image->pixels[i].b = 255;
 		if(image->pixels[i].g > 255) image->pixels[i].g = 255;
 	}
+	printf("Plus de cyan : fait. \n");
 }
 void magenta(Calque * image) {
 	//gris(image);
@@ -186,6 +192,7 @@ void magenta(Calque * image) {
 		if(image->pixels[i].r > 255) image->pixels[i].r = 255;
 		if(image->pixels[i].b > 255) image->pixels[i].b = 255;
 	}
+	printf("Plus de magenta : fait. \n");
 }
 void jaune(Calque * image) {
 	//gris(image);
@@ -196,5 +203,6 @@ void jaune(Calque * image) {
 		if(image->pixels[i].r > 255) image->pixels[i].r = 255;
 		if(image->pixels[i].g > 255) image->pixels[i].g = 255;
 	}
+	printf("Plus de jaune : fait. \n");
 }
 

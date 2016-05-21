@@ -21,13 +21,13 @@ Calque * lireImage(char nomImage[]) {
 
 	fgets(codePPM, 3, image);
 	fseek(image, 1, SEEK_CUR);
-	fgets(taille, 10, image);
+	fgets(taille, 8, image);
 	fseek(image, 1, SEEK_CUR);
 	fgets(maxCouleurC, 4, image);
 
 	int i = 0;
 	int j = 0;
-	while(i < 4) {
+	while(i < 3) {
 		largeurC[j] = taille[i];
 		i ++;
 		j ++;
@@ -44,8 +44,8 @@ Calque * lireImage(char nomImage[]) {
 	hauteur = atoi(hauteurC);
 	maxCouleur = atoi(maxCouleurC);
 
-
-	printf("Code ppm : %s \n", codePPM);
+	printf("Informations de l'image : \n");
+	printf("Code PPM : %s \n", codePPM);
 	printf("Largeur : %d \n", largeur);
 	printf("Hauteur : %d \n", hauteur);
 	printf("Couleur : %d \n", maxCouleur);
@@ -74,11 +74,6 @@ Calque * lireImage(char nomImage[]) {
 					//fseek(image, 0, SEEK_CUR);
 					fgets(bleu, 5, image);
 					imageDeBase->pixels[i].b = atol(bleu);
-
-					printf("Rouge : %d \n", imageDeBase->pixels[i].r);
-					printf("Vert : %d \n", imageDeBase->pixels[i].g);
-					printf("Bleu : %d \n", imageDeBase->pixels[i].b);
-					printf("\n");
 
 					for(int p = 0; p < 4; p ++) {
 					rouge[p] = ' ';
@@ -121,7 +116,6 @@ void ecritureImage(Calque * imageFinale, char nomImage[]) {
 	strcat(nomImageFinale, ".ppm");
 	strcat(dossier, "images/");
 	strcat(dossier, nomImageFinale);
-	printf("nom dossier %s \n", dossier);
 	FILE * image = NULL;
 	image = fopen(dossier, "w");
 	if(image != NULL) {
@@ -134,4 +128,13 @@ void ecritureImage(Calque * imageFinale, char nomImage[]) {
 		}
 	}
 	fclose(image);
+}
+
+void dessinerHistogramme(Calque * image) {
+	/*for(int i = 0; i < 256; i++) {
+		for(int j = 0; j < image->listLUT->LUT[i]; j ++) {
+			printf(".");
+		}
+		printf("\n");
+	}*/
 }
