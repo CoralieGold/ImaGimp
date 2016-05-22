@@ -108,16 +108,8 @@ Calque * lireImage(char nomImage[]) {
 }
 
 void ecritureImage(Calque * imageFinale, char nomImage[]) {
-	char nomImageFinale[100];
-	char dossier[100];
-	memset(nomImageFinale, 0, sizeof(nomImageFinale));
-	memset(dossier, 0, sizeof(dossier));
-	strcat(nomImageFinale, nomImage);
-	strcat(nomImageFinale, ".ppm");
-	strcat(dossier, "images/");
-	strcat(dossier, nomImageFinale);
 	FILE * image = NULL;
-	image = fopen(dossier, "w");
+	image = fopen(nomImage, "w");
 	if(image != NULL) {
 		fprintf(image, "%s \n%d    %d   \n255 \n", imageFinale->codePPM, imageFinale->largeur, imageFinale->hauteur);
 		for(int i = 0; i < imageFinale->hauteur * imageFinale->largeur; i ++) {

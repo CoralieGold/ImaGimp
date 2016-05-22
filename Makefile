@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -std=c99
-LDFLAGS = -lSDL -lm
+LDFLAGS = -lSDL -lm -lSDL_image -lGLU -lGL -lglut
 
 APP_BIN = imagimp
 

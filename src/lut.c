@@ -93,8 +93,8 @@ LUT * invert(){
 	for (i = 0; i < 256; i++) {
 		nouveau->LUT[i]=255-i;
 	}
-	return nouveau;
 	printf("Inversion des couleurs : fait. \n");
+	return nouveau;	
 }
 
 //ADDLUM
@@ -102,12 +102,15 @@ LUT * addLum(float lum){
     LUT * nouveau = malloc(sizeof(LUT));
 	int i;
 	float lumiere;
-	for (i = 0; i < 256; i++) {
-		lumiere = i + lum;
-		if(lumiere < 255) nouveau->LUT[i] = lumiere;
-		else nouveau->LUT[i] = 255;
+	if(lum > 0) {
+		for (i = 0; i < 256; i++) {
+			lumiere = i + lum;
+			if(lumiere < 255) nouveau->LUT[i] = lumiere;
+			else nouveau->LUT[i] = 255;
+		}
+		printf("Ajout de lumière : fait. \n");
 	}
-	printf("Ajout de lumière : fait. \n");
+	else printf("Ajout de lumière : impossible (paramètre incorrect). \n");
 	return nouveau;
 }
 
@@ -116,12 +119,15 @@ LUT * dimLum(float lum){
     LUT * nouveau = malloc(sizeof(LUT));
 	int i;
 	float lumiere;
-	for (i = 0; i < 256; i++) {
-		lumiere = i - lum;
-		if(lumiere > 0) nouveau->LUT[i] = lumiere;
-		else nouveau->LUT[i] = 0;
+	if(lum > 0) {
+		for (i = 0; i < 256; i++) {
+			lumiere = i - lum;
+			if(lumiere > 0) nouveau->LUT[i] = lumiere;
+			else nouveau->LUT[i] = 0;
+		}
+		printf("Diminution de lumière : fait. \n");
 	}
-	printf("Diminution de lumière : fait. \n");
+	else printf("Diminution de lumière : impossible (paramètre incorrect). \n");
 	return nouveau;
 }
 
@@ -132,13 +138,16 @@ LUT * addCon(float c){
 	LUT * nouveau = malloc(sizeof(LUT));
 	int i;
 	float contraste;
-	for (i = 0; i < 256; i++) {
-		contraste = (-(127-i)*c)+127;
-		if(contraste >= 255) nouveau->LUT[i] = 255;
-		else if(contraste <= 0) nouveau->LUT[i] = 0;
-		else nouveau->LUT[i]=contraste;
+	if (c > 0) {
+		for (i = 0; i < 256; i++) {
+			contraste = (-(127-i)*c)+127;
+			if(contraste >= 255) nouveau->LUT[i] = 255;
+			else if(contraste <= 0) nouveau->LUT[i] = 0;
+			else nouveau->LUT[i]=contraste;
+		}
+		printf("Ajout de contraste : fait. \n");
 	}
-	printf("Ajout de contraste : fait. \n");
+	else printf("Ajout de contraste : impossible (paramètre incorrect). \n");
 	return nouveau;
 }
 
@@ -155,8 +164,9 @@ LUT * dimCon(float c){
 			else if(contraste <= 0) nouveau->LUT[i] = 0;
 			else nouveau->LUT[i]=contraste;
 		}
+		printf("Diminution de contraste : fait. \n");
 	}
-	printf("Diminution de contraste : fait. \n");
+	else printf("Diminution de contraste : impossible (paramètre incorrecte). \n");
 	return nouveau;
 }
 
