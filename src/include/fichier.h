@@ -9,11 +9,11 @@
 #include "calque.h"
 #include "lut.h"
 
+// Lecture d'une image ppm
 Calque * lireImage(char nomImage[]);
 
+// Ecriture d'une image ppm
 void ecritureImage(Calque * imageFinale, char nomImage[]);
-
-void dessinerHistogramme(Calque * image);
 
 #endif
 

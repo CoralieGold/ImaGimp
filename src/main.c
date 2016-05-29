@@ -7,15 +7,20 @@
 #include "include/fichier.h"
 #include "include/dessin.h"
 
-int main(int argc, char** argv) {
-	if(argc < 5 && argc%2 == 0) {
+int main(int argc, char** argv)
+{
+  // Vérification des paramètres de départ
+	if(argc < 5 && argc%2 == 0)
+  {
 		printf("Vous devez donner un paramètre pour chaque code LUT.\n");
 		return 1;
 	}
 
 	Calque * image = lireImage(argv[1]);
 
-	if(image->hauteur * image->largeur > 490000) {
+  // Vérification de la taille de l'image
+	if(image->hauteur * image->largeur >= 490000)
+  {
 		printf("L'image est trop grande pour être traitée. \n");
 		return 1;
 	}
@@ -34,16 +39,20 @@ int main(int argc, char** argv) {
 
 
 	/*** TRAITEMENT ***/
+
 	printf("Début du traitement.\n");
 	int i = 3;
-	while(argc > i) {
+	while(argc > i)
+  {
 		
 		strcpy(codeLut,argv[i]);
 		parametre = atof(argv[i+1]);
 
 		addCalque(image);
 
-		if(!strcmp(codeLut, "SEPIA") || !strcmp(codeLut, "NB") || !strcmp(codeLut, "ROUGE") || !strcmp(codeLut, "VERT") || !strcmp(codeLut, "BLEU") || !strcmp(codeLut, "JAUNE") || !strcmp(codeLut, "MAGENTA") || !strcmp(codeLut, "CYAN")) {
+    // Cas d'une modification de calque
+		if(!strcmp(codeLut, "SEPIA") || !strcmp(codeLut, "NB") || !strcmp(codeLut, "ROUGE") || !strcmp(codeLut, "VERT") || !strcmp(codeLut, "BLEU") || !strcmp(codeLut, "JAUNE") || !strcmp(codeLut, "MAGENTA") || !strcmp(codeLut, "CYAN"))
+    {
 			if (!strcmp(codeLut, "SEPIA")) sepia(image);
 			else if (!strcmp(codeLut, "NB")) nb(image);
 			else if (!strcmp(codeLut, "ROUGE")) rouge(image);
@@ -53,19 +62,17 @@ int main(int argc, char** argv) {
 			else if (!strcmp(codeLut, "MAGENTA")) magenta(image);
 			else if (!strcmp(codeLut, "JAUNE")) jaune(image);
 		}
-		else {
+		else
+    {
+      // Cas d'un ajout de lut
 			if(!strcmp(codeLut, "ADDLUM"))
-			image->listLUT = addLum(parametre); //si les deux chaines egales
+			image->listLUT = addLum(parametre);
 			else if (!strcmp(codeLut, "DIMLUM")) image->listLUT = dimLum(parametre);
 			else if (!strcmp(codeLut, "DIMCON")) image->listLUT = dimCon(parametre);
 			else if (!strcmp(codeLut, "ADDCON")) image->listLUT = addCon(parametre);
 			else if (!strcmp(codeLut, "INVERT")) image->listLUT = invert();
-		
-		
-			
 			appliquerLut(image);
 		}
-
 		i = i + 2;
 	}
 
@@ -78,27 +85,29 @@ int main(int argc, char** argv) {
 	/*** IHM ***/
 
 	glutInit(&argc, argv);
-	/* Dimensions de la fenêtre */
+
 	unsigned int windowWidth  = 800;
 	unsigned int windowHeight = 500;
 
-	/* Initialisation de la SDL */
-	if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
+	// Initialisation de la SDL
+	if(-1 == SDL_Init(SDL_INIT_VIDEO))
+  {
 	fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
 	    return EXIT_FAILURE;
 	}
 
- /* Ouverture d'une fen�tre et cr�ation d'un contexte OpenGL */
+  // Ouverture d'une fenetre et creation d'un contexte OpenGL
   setVideoMode(windowWidth, windowHeight);
   reshape(windowWidth,windowHeight);
   
-
-  /* Titre de la fenêtre */
+  // Titre de la fenêtre
   SDL_WM_SetCaption("ImaGimp", NULL);
 
-	// CREATION D'UNE IMAGE
+	/** Creation d'une texture pour l'image de base **/
+
   SDL_Surface* imageDeBase = IMG_Load(argv[1]);
-  if(imageDeBase == NULL) {
+  if(imageDeBase == NULL)
+  {
     fprintf(stderr, "Impossible de charger l'image %s\n", argv[1]);
     return EXIT_FAILURE;
   }
@@ -110,7 +119,8 @@ int main(int argc, char** argv) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
   GLenum format;
-  switch(imageDeBase->format->BytesPerPixel) {
+  switch(imageDeBase->format->BytesPerPixel)
+  {
     case 1:
     format = GL_RED;
     break;
@@ -130,9 +140,10 @@ int main(int argc, char** argv) {
 
   SDL_FreeSurface(imageDeBase);
 
-	// CREATION D'UNE IMAGE
+  /** Creation d'une texture pour l'image finale **/
   SDL_Surface* imageFinale = IMG_Load(dossier);
-  if(imageDeBase == NULL) {
+  if(imageDeBase == NULL)
+  {
     fprintf(stderr, "Impossible de charger l'image %s\n", dossier);
     return EXIT_FAILURE;
   }
@@ -144,7 +155,8 @@ int main(int argc, char** argv) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
   GLenum format2;
-  switch(imageFinale->format->BytesPerPixel) {
+  switch(imageFinale->format->BytesPerPixel)
+  {
     case 1:
     format2 = GL_RED;
     break;
@@ -164,19 +176,17 @@ int main(int argc, char** argv) {
 
   SDL_FreeSurface(imageFinale);
 
-  /* BOUCLE D'AFFICHAGE */
-printf("Affichage du résultat : \n");
+  // Boucle d'affichage
+  printf("Affichage du résultat : \n");
   int loop = 1;
-  while(loop /*&& audio_len > 0*/) {
-    /* Recuperation du temps au début de la boucle */
+  while(loop) {
     Uint32 startTime = SDL_GetTicks();
-    /* Attente d'1/10 de seconde */
     SDL_Delay(100);
-
-    /* Code de dessin */
     
-	ecrireTexte(10, windowHeight - 60, GLUT_BITMAP_HELVETICA_18, argv[1]);
-	ecrireTexte(windowWidth/2 + 10, windowHeight - 60, GLUT_BITMAP_HELVETICA_18, dossier);
+    ecrireTexte(10, windowHeight - 60, GLUT_BITMAP_HELVETICA_18, argv[1]);
+    ecrireTexte(windowWidth/2 + 10, windowHeight - 60, GLUT_BITMAP_HELVETICA_18, dossier);
+
+    /** Affichage image de base **/
 
     // on affiche une texture 2D ici
     glEnable(GL_TEXTURE_2D);
@@ -203,6 +213,8 @@ printf("Affichage du résultat : \n");
     // on affiche plus de texture
     glDisable(GL_TEXTURE_2D);
     glPopMatrix();
+
+    /** Affichage image finale **/
 
     // on affiche une texture 2D ici
     glEnable(GL_TEXTURE_2D);
@@ -231,19 +243,18 @@ printf("Affichage du résultat : \n");
     glPopMatrix();
 
 
-    /* Echange du front et du back buffer : mise �  jour de la fenêtre */
+    // Echange du front et du back buffer //
     SDL_GL_SwapBuffers();
 
-    /* Boucle traitant les evenements */
+    // Boucle traitant les evenements
     SDL_Event e;
     while(SDL_PollEvent(&e)) {
-      /* L'utilisateur ferme la fenetre : */
+      // L'utilisateur ferme la fenetre //
       if(e.type == SDL_QUIT) {
         loop = 0;
         break;
       }
       switch(e.type) {
-        /* resize window */
         case SDL_VIDEORESIZE:
         windowWidth  = e.resize.w;
         windowHeight = e.resize.h;
@@ -256,21 +267,16 @@ printf("Affichage du résultat : \n");
       }
     }
 
-    /* Calcul du temps ecoule */
     Uint32 elapsedTime = SDL_GetTicks() - startTime;
 
-    /* Si trop peu de temps s'est ecoule, on met en pause le programme */
     if(elapsedTime < FRAMERATE_MILLISECONDS) {
       SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
     }
   }
 
   glDeleteTextures(1, &textureId);
- glDeleteTextures(2, &textureId2);
- // glDeleteTextures(1, &textureImageFinale);
-  /* Liberation des ressources associ�es a la SDL */
+  glDeleteTextures(2, &textureId2);
   SDL_Quit();
-
 
 	return 0;
 }

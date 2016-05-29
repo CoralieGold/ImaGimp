@@ -1,5 +1,6 @@
 #include "include/dessin.h"
 
+// Redimensionne la taille de la fenêtre
 void reshape(unsigned int windowWidth, unsigned int windowHeight)
 {
   glViewport(0, 0, windowWidth, windowHeight);
@@ -8,6 +9,7 @@ void reshape(unsigned int windowWidth, unsigned int windowHeight)
   gluOrtho2D(0, windowWidth, 0, windowHeight);
 }
 
+// Lance la fenêtre
 void setVideoMode(unsigned int windowWidth, unsigned int windowHeight)
 {
   if(NULL == SDL_SetVideoMode(windowWidth, windowHeight, BIT_PER_PIXEL, SDL_OPENGL | SDL_RESIZABLE))
@@ -17,7 +19,7 @@ void setVideoMode(unsigned int windowWidth, unsigned int windowHeight)
   }
 }
 
-/** Ecriture d'un texte sur l'ecran **/
+// Ecrit du texte dans la fenêtre
 void ecrireTexte(float x, float y, void* font, const char* s)
 {
   glColor3f(1, 1, 1);

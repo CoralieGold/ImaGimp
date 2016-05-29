@@ -1,77 +1,81 @@
 #include "include/lut.h"
 
-//Initialiser une liste
-LUT * initListeLUT(){
+// Initialise une liste
+LUT * initListeLUT()
+{
 	LUT * List = malloc(sizeof(LUT));
 	List->previous = NULL;
 	List->next = NULL;
 	return List;
 }
 
-//Regarde si la liste est vide
+// Retourne 1 si la liste est vide, 0 sinon
 int isListNull(LUT *List){
 	return NULL == List->next;
-	//équivalent à
-	// if (List->next == NULL) {
-	// 	return 1;
-	// }
-	// else{
-	// 	return 0;
-	// }
 }
 
-//Ajout d'un LUT
-/*void addLUT(LUT *List, int LUT[256]) {
+// Ajout d'un LUT -- Ne fonctionne pas à la compilation
+/*void addLUT(LUT *List, int LUT[256])
+{
 	//Si la n'existe pas
-	if (NULL == List) {
+	if (NULL == List)
+	{
 		return;
 	}
 
 	//Si la liste est vide
-	if (isListNull(List) == 1) {
+	if (isListNull(List) == 1)
+	{
 		List->next = List;
 		List->previous = List;
-		for (int i = 0; i < 256; i++) {
+		for (int i = 0; i < 256; i++)
+		{
 			List->LUT[i]=LUT[i];
 		}
 		return;
 	}
 
-	//Si la liste contient un seul noeud
+	// Si la liste contient un seul noeud
 	if (List->next == List) {//elle pointe sur elle même)
 		LUT * nouveau = malloc(sizeof(LUT));
 		nouveau->previous = List;
 		nouveau->next = List;
 		List->next = nouveau;
 		List->previous = nouveau;
-		for (int i = 0; i < 256; i++) {
+		for (int i = 0; i < 256; i++)
+		{
 			nouveau->LUT[i]=LUT[i];
 		}
 		return;
 	}
 
-	//Sinon c'est qu'il y a déjà plein de noeud
+	// Sinon c'est qu'il y a déjà plein de noeud
 	LUT * new = malloc(sizeof(LUT));
 	new->next = List;
 	new->previous = List->previous;
 	List->previous->next = new;
 	List->previous = new;
-	for (int i = 0; i < 256; i++) {
+	for (int i = 0; i < 256; i++)
+	{
 		new->LUT[i]=LUT[i];
 	}
 }*/
 
-//Supression d'un noeud
-void removeNode(LUT *List){
-	if (NULL == List) {
+// Supression d'un lut
+void removeLut(LUT *List)
+{
+	if (NULL == List)
+	{
 		return;
 	}
 
-	if (isListNull(List)) {
+	if (isListNull(List))
+	{
 		return;
 	}
 
-	if (List->next == List) {
+	if (List->next == List)
+	{
 		List->next = NULL;
 		List->previous = NULL;
 		return;
@@ -83,27 +87,31 @@ void removeNode(LUT *List){
 	free(tmp);
 }
 
+/** MODIFICATION DE L'IMAGE **/
 
-/*****FONCTION LUT*****/
-
-//INVERT
-LUT * invert(){
+// INVERT : inverse les couleurs
+LUT * invert()
+{
     LUT * nouveau = malloc(sizeof(LUT));
 	int i;
-	for (i = 0; i < 256; i++) {
+	for (i = 0; i < 256; i++)
+	{
 		nouveau->LUT[i]=255-i;
 	}
 	printf("Inversion des couleurs : fait. \n");
 	return nouveau;	
 }
 
-//ADDLUM
-LUT * addLum(float lum){
+// ADDLUM : augmente la luminosite
+LUT * addLum(float lum)
+{
     LUT * nouveau = malloc(sizeof(LUT));
 	int i;
 	float lumiere;
-	if(lum > 0) {
-		for (i = 0; i < 256; i++) {
+	if(lum > 0)
+	{
+		for (i = 0; i < 256; i++)
+		{
 			lumiere = i + lum;
 			if(lumiere < 255) nouveau->LUT[i] = lumiere;
 			else nouveau->LUT[i] = 255;
@@ -114,13 +122,16 @@ LUT * addLum(float lum){
 	return nouveau;
 }
 
-//DIMLUM
-LUT * dimLum(float lum){
+// DIMLUM : diminue la luminosite
+LUT * dimLum(float lum)
+{
     LUT * nouveau = malloc(sizeof(LUT));
 	int i;
 	float lumiere;
-	if(lum > 0) {
-		for (i = 0; i < 256; i++) {
+	if(lum > 0)
+	{
+		for (i = 0; i < 256; i++)
+		{
 			lumiere = i - lum;
 			if(lumiere > 0) nouveau->LUT[i] = lumiere;
 			else nouveau->LUT[i] = 0;
@@ -131,15 +142,16 @@ LUT * dimLum(float lum){
 	return nouveau;
 }
 
-//ADDCON
-//255/2=127
-//C -> valeur de l'ajout contraste
-LUT * addCon(float c){
+// ADDCON : augmente le contraste
+LUT * addCon(float c)
+{
 	LUT * nouveau = malloc(sizeof(LUT));
 	int i;
 	float contraste;
-	if (c > 0) {
-		for (i = 0; i < 256; i++) {
+	if (c > 1)
+	{
+		for (i = 0; i < 256; i++)
+		{
 			contraste = (-(127-i)*c)+127;
 			if(contraste >= 255) nouveau->LUT[i] = 255;
 			else if(contraste <= 0) nouveau->LUT[i] = 0;
@@ -151,14 +163,16 @@ LUT * addCon(float c){
 	return nouveau;
 }
 
-//DIMCON
-//Verifier que C =! 0
-LUT * dimCon(float c){
+// DIMCON : diminue le contraste
+LUT * dimCon(float c)
+{
 	int i;
 	float contraste;
 	LUT * nouveau = malloc(sizeof(LUT));
-	if (c > 0) {
-		for (i = 0; i < 256; i++) {
+	if (c > 1)
+	{
+		for (i = 0; i < 256; i++)
+		{
 			contraste = (-(127-i)*(1/c))+127;
 			if(contraste >= 255) nouveau->LUT[i] = 255;
 			else if(contraste <= 0) nouveau->LUT[i] = 0;

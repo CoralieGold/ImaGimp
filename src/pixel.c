@@ -1,6 +1,8 @@
 #include "include/pixel.h"
 
-Pixel createPixel(int red,int green,int blue,int alpha){
+// Creation d'un pixel
+Pixel createPixel(int red,int green,int blue,int alpha)
+{
   Pixel pixels;
   pixels.r = red;
   pixels.g = green;
